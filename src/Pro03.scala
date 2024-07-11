@@ -1,4 +1,4 @@
-object Pro03 {
+object format_string {
 
   def toUpper(s: String): String = s.toUpperCase
 
@@ -9,14 +9,11 @@ object Pro03 {
   }
 
   def main(args: Array[String]): Unit = {
-    val benny = formatNames("Benny")(toUpper)
-    val niroshan = formatNames("Niroshan")(name => name.take(2).toUpperCase + name.drop(2))
-    val saman = formatNames("Saman")(toLower)
-    val kumara = formatNames("Kumara")(name => name.take(name.length - 1) + name.last.toUpper)
 
-    println(benny)      // Output: BENNY
-    println(niroshan)   // Output: NIroshan
-    println(saman)      // Output: saman
-    println(kumara)     // Output: KumarA
+    println(formatNames("Benny")(toUpper))
+    println(formatNames("Niroshan")(name => formatNames(name.take(2))(toUpper)+ name.drop(2)))
+    println(formatNames("Saman")(toLower))
+    println(formatNames("Kumara")(name => name.take(name.length - 1) + name.last.toUpper))
+
   }
 }
