@@ -1,100 +1,50 @@
-import scala.io.StdIn
-object Pro01 {
-  val item = Array("soap", "fruit juice", "books", "pen", "pencil", "eraser")
-  val quantity = Array(6, 4, 10, 20, 30, 40)
+object InventoryManagement {
+  // Initial inventory
+  var itemNames = Array("Apples", "Bananas", "Oranges")
+  var itemQuantities = Array(10, 5, 7)
 
-  def displayinventory(): Unit = {
-
-
-    println("list of the inventory items names and quantity ")
-    for(i <- item.indices)
-    {
-      println(item(i) +" " + quantity(i) + "\n")
-
+  // Function to display the inventory
+  def displayInventory(): Unit = {
+    println("Current Inventory:")
+    for (i <- itemNames.indices) {
+      println(s"${itemNames(i)}: ${itemQuantities(i)}")
     }
-
   }
 
-  def restockitem(name: String , quant: Int): Unit = {
-    var count=0
-    for(i<- item.indices)
-    {
-      if(item(i) == name)
-      {
-        quantity(i) = quantity(i) + quant
-        count=count+1
+  // Function to restock an item
+  def restockItem(itemName: String, quantity: Int): Unit = {
+    val index = itemNames.indexOf(itemName)
+    if (index != -1) {
+      itemQuantities(index) += quantity
+      println(s"Restocked $itemName with $quantity units. New quantity: ${itemQuantities(index)}")
+    } else {
+      println(s"Item $itemName does not exist in the inventory.")
+    }
+  }
+
+  // Function to sell an item
+  def sellItem(itemName: String, quantity: Int): Unit = {
+    val index = itemNames.indexOf(itemName)
+    if (index != -1) {
+      if (itemQuantities(index) >= quantity) {
+        itemQuantities(index) -= quantity
+        println(s"Sold $quantity units of $itemName. New quantity: ${itemQuantities(index)}")
+      } else {
+        println(s"Not enough $itemName in stock to sell $quantity units.")
       }
+    } else {
+      println(s"Item $itemName does not exist in the inventory.")
     }
-
-    if(count<1)
-    {
-      println("your item is not sale or restore in our store")
-    }
-
-    println("now available items and quantity are : ")
-    for(i <- item.indices)
-    {
-      println(item(i) + " " + quantity(i) + "\n")
-    }
-
-
   }
 
-  def sellitem(name: String, quant: Int): Unit = {
-    var count = 0
-    for (i <- item.indices)
-    {
-      if (item(i) == name) {
-        quantity(i) = quantity(i) - quant
-        count = count - 1
-      }
-    }
-
-    if (count < 1)
-    {
-      println("your item is not sale or restore in our store")
-    }
-
-    println("now available items and quantity are : ")
-    for (i <- item.indices) {
-      println(item(i) + " " + quantity(i) + "\n")
-    }
-
-
-  }
-
-
-  def main(args: Array[String]) : Unit = {
-
-    displayinventory()
-    println("how many items do you want to buy \n ")
-    var result1= StdIn.readLine().toInt
-
-
-    for(j <-0 until result1 )
-    {
-      println("enter the item which you want to buy : ")
-      var result2= StdIn.readLine().toString
-
-      println("enter the quantity this item which you want to buy : ")
-      var result3=StdIn.readLine().toInt
-      restockitem(result2,result3)
-
-
-    }
-
-    for (j <- 0 until result1) {
-      println("enter the item which you want to add : ")
-      var result4 = StdIn.readLine().toString
-
-      println("enter the quantity this item which you want to add : ")
-      var result5 = StdIn.readLine().toInt
-      sellitem(result4, result5)
-
-
-    }
-
-
+  // Main function to test the system
+  def main(args: Array[String]): Unit = {
+    displayInventory()
+    restockItem("Apples", 5)
+    sellItem("Bananas", 3)
+    sellItem("Oranges", 10)
+    restockItem("Grapes", 20)
+    displayInventory()
   }
 
 }

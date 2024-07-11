@@ -4,7 +4,7 @@ object Pro02 {
   def main(args: Array[String]): Unit = {
 
     println("enter the number which you like : ")
-    var num=StdIn.readLine().toInt
+    var num = StdIn.readLine().toInt
 
     if(num==0)
     {
